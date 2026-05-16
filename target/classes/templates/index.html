@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spring Boot Simple UI</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<div class="page-container">
+    <header>
+        <h1>Welcome to Spring Boot</h1>
+        <p>This is a simple UI with a greeting form.</p>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Student Registration</h2>
+            <p>Enter student details and save them to the database.</p>
+            <div th:if="${successMessage}" class="success-message" th:text="${successMessage}"></div>
+            <form th:action="@{/students}" th:object="${student}" method="post">
+                <label for="firstName">First Name</label>
+                <input id="firstName" th:field="*{firstName}" type="text" placeholder="First name" required />
+
+                <label for="lastName">Last Name</label>
+                <input id="lastName" th:field="*{lastName}" type="text" placeholder="Last name" required />
+
+                <label for="email">Email</label>
+                <input id="email" th:field="*{email}" type="email" placeholder="Email address" required />
+
+                <label for="age">Age</label>
+                <input id="age" th:field="*{age}" type="number" min="1" placeholder="Age" required />
+
+                <button type="submit">Save Student</button>
+            </form>
+        </section>
+
+        <section class="card" th:if="${students}">
+            <h2>Saved Students</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="student : ${students}">
+                        <td th:text="${student.id}">1</td>
+                        <td th:text="${student.firstName}">First</td>
+                        <td th:text="${student.lastName}">Last</td>
+                        <td th:text="${student.email}">email@example.com</td>
+                        <td th:text="${student.age}">20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>Built with Spring Boot and Thymeleaf.</p>
+    </footer>
+</div>
+</body>
+</html>
